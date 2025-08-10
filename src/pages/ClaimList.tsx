@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
+import { Button, Grid } from "@mui/material";
 import { ClaimTable, ClaimFilter } from "../components";
 import type { Claim } from "../types";
 
 const ClaimList = () => {
+  const navigate = useNavigate();
   const [claims, setClaims] = useState<Claim[]>([]);
 
   const [tempIdSearch, setTempIdSearch] = useState<string>("");
@@ -52,6 +55,16 @@ const ClaimList = () => {
   return (
     <div>
       <h2>Claims List</h2>
+      <Grid
+        display={"grid"}
+        justifyContent={"left"}
+        alignItems={"center"}
+        my={2}
+      >
+        <Button variant="contained" onClick={() => navigate("/create-claim")}>
+          Create Claim
+        </Button>
+      </Grid>
       <ClaimFilter
         idSearch={tempIdSearch}
         onIdSearchChange={setTempIdSearch}
@@ -63,6 +76,7 @@ const ClaimList = () => {
         onStatusChange={setTempStatus}
         onSubmit={applyFilters}
       />
+
       <ClaimTable claimData={filteredClaims} />
     </div>
   );
