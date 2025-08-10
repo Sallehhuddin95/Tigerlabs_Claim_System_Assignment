@@ -84,7 +84,7 @@ const ClaimFilter: React.FC<ClaimFilterProps> = ({
       </FormControl>
 
       <Button variant="contained" onClick={onSubmit} sx={{ height: 40 }}>
-        Submit
+        Search
       </Button>
       <Button
         variant="outlined"
