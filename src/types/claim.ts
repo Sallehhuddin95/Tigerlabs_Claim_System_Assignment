@@ -5,6 +5,8 @@ export type ClaimStatus =
   | "Completed"
   | "Rejected";
 
+export type Order = "asc" | "desc";
+
 export interface Claim {
   id: number;
   number: string;
