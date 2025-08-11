@@ -5,6 +5,8 @@ export type ClaimStatus =
   | "Completed"
   | "Rejected";
 
+export type Order = "asc" | "desc";
+
 export interface Claim {
   id: number;
   number: string;
@@ -17,4 +19,12 @@ export interface Claim {
   incidentDate: string;
   processingFee: string;
   createdAt: string;
+}
+
+export interface PolicyLookupResponse {
+  holder: string;
+  id: number;
+  status: string;
+  number: string;
+  finalAmount: string;
 }
