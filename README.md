@@ -11,7 +11,7 @@ Includes search, filter, sorting, form validation, and date picker integration.
 - **React + TypeScript**
 - **Material UI (MUI)**
 - **React Router DOM**
-- **Jest + React Testing Library**
+- **Vitest + React Testing Library**
 
 ---
 
@@ -43,3 +43,27 @@ npm run mock
 ```bash
 npm run dev
 ```
+
+Open your browser and visit:
+
+- http://localhost:5173
+- http://localhost:5173/?admin=true
+- http://localhost:5173/create-claim
+
+### ⚙️ Running Tests & Coverage
+
+Run unit tests:
+
+```bash
+npm run test
+```
+
+Generate coverage report:
+Run unit tests:
+
+```bash
+npm run coverage
+```
+
+Coverage reports will be output under the coverage/ folder.
+Open coverage/index.html in your browser to view detailed coverage info.

@@ -69,8 +69,10 @@ const ClaimFilter: React.FC<ClaimFilterProps> = ({
       />
 
       <FormControl size="small" sx={{ minWidth: 150 }}>
-        <InputLabel>Status</InputLabel>
+        <InputLabel id="status-label">Status</InputLabel>
         <Select
+          labelId="status-label"
+          id="status-select"
           label="Status"
           value={statusFilter}
           onChange={(e) => onStatusChange(e.target.value)}
