@@ -72,7 +72,11 @@ const ClaimTable = ({ claimData }: ClaimTableProps) => {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table
+          sx={{ minWidth: 650 }}
+          aria-label="simple table"
+          data-testid="claim-table"
+        >
           <TableHead>
             <TableRow>
               <StyledTableHeaderCell>Claim id</StyledTableHeaderCell>

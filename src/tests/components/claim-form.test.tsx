@@ -1,7 +1,10 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import ClaimForm from "../../components/ClaimForm";
 import dayjs from "dayjs";
+import axios from "axios";
+
+vi.mock("axios");
 
 vi.spyOn(console, "log").mockImplementation(() => {});
 
@@ -23,7 +26,28 @@ describe("ClaimForm", () => {
     ).toBeInTheDocument();
   });
 
-  it("submits successfully when all fields are filled with valid data", () => {
+  it("submits successfully when all fields are filled with valid data", async () => {
+    const mockResponse = {
+      status: 200,
+      data: {
+        policyNumber: "PN123",
+        holder: "John Doe",
+        insuredName: "Car",
+        amount: 123.45,
+        description: "Accident claim",
+        incidentDate: "2025-02-19T16:00:00.000Z",
+        processingFee: 50.0,
+        number: "CL-73866",
+        createdAt: "2025-08-12",
+        status: "Submitted",
+        id: 202,
+      },
+    };
+
+    (axios.post as unknown as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
+      mockResponse
+    );
+
     render(<ClaimForm />);
 
     fireEvent.change(screen.getByLabelText(/Policy Number/i), {
@@ -50,17 +74,19 @@ describe("ClaimForm", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /add claim/i }));
 
-    expect(screen.queryByText(/is required/i)).not.toBeInTheDocument();
+    waitFor(() => {
+      expect(screen.queryByText(/is required/i)).not.toBeInTheDocument();
 
-    expect(screen.getByLabelText(/Policy Number/i)).toHaveValue("");
-    expect(screen.getByLabelText(/Holder Name/i)).toHaveValue("");
-    expect(screen.getByLabelText(/Insured Item/i)).toHaveValue("");
-    expect(screen.getByLabelText(/Claim Amount/i)).toHaveValue(null);
-    expect(screen.getByLabelText(/Description/i)).toHaveValue("");
-    expect(screen.getAllByLabelText(/Incident Date/i)[1]).toHaveValue(
-      dayjs().format("MM/DD/YYYY")
-    );
-    expect(screen.getByLabelText(/Processing Fee/i)).toHaveValue(null);
+      expect(screen.getByLabelText(/Policy Number/i)).toHaveValue("");
+      expect(screen.getByLabelText(/Holder Name/i)).toHaveValue("");
+      expect(screen.getByLabelText(/Insured Item/i)).toHaveValue("");
+      expect(screen.getByLabelText(/Claim Amount/i)).toHaveValue(null);
+      expect(screen.getByLabelText(/Description/i)).toHaveValue("");
+      expect(screen.getAllByLabelText(/Incident Date/i)[1]).toHaveValue(
+        dayjs().format("MM/DD/YYYY")
+      );
+      expect(screen.getByLabelText(/Processing Fee/i)).toHaveValue(null);
+    });
   });
 
   it("accepts valid claim amount and processing fee up to 2 decimal places", () => {

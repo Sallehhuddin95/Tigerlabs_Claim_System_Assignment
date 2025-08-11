@@ -20,3 +20,11 @@ export interface Claim {
   processingFee: string;
   createdAt: string;
 }
+
+export interface PolicyLookupResponse {
+  holder: string;
+  id: number;
+  status: string;
+  number: string;
+  finalAmount: string;
+}
